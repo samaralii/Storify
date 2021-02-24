@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Stories') }}</div>
+                <div class="card-header"> Stories </div>
 
                 <div class="card-body">
                     <table class="table">
@@ -30,6 +30,9 @@
                                     {{ $story->status == 1 ? 'Yes' : 'No' }}
                                 </td>
                                 <td>
+                                    {{-- <a href="/stories/{{ $story->id }}" class="btn btn-secondary">View</a>  --}}
+                                    {{-- <a href="{{ route('stories.show', [$story->id]) }}" class="btn btn-secondary">View</a> --}}
+                                    <a href="{{ route('stories.show', [$story]) }}" class="btn btn-secondary">View</a>
                                 </td>
                             </tr>
                         @endforeach
