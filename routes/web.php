@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StoriesController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/stories', [App\Http\Controllers\StoriesController::class, 'index'])->name('stories.index');
-    Route::get('/stories/{story}', [App\Http\Controllers\StoriesController::class, 'show'])->name('stories.show');
+    // Route::get('/stories', [App\Http\Controllers\StoriesController::class, 'index'])->name('stories.index');
+    // Route::get('/stories/{story}', [App\Http\Controllers\StoriesController::class, 'show'])->name('stories.show');
+    // Route::resource('stories', StoriesController::class);
+    Route::resource('stories', StoriesController::class);
 });
