@@ -42,16 +42,18 @@ class StoriesController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        auth()->user()->stories()->create([
-            'title' => $request->title,
-            'body' => $request->body,
-            'type' => $request->type,
-            'status' => $request->status,
-            // 'user_id' => auth()->user()->id
+
+        $data = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'type' => 'required',
+            'status' => 'required',
         ]);
 
+        auth()->user()->stories()->create($data);
+
         // dd('here');
-            return redirect()->route('stories.index')->with('status', 'Story created successfully!');
+        return redirect()->route('stories.index')->with('status', 'Story created successfully!');
     }
 
     /**
