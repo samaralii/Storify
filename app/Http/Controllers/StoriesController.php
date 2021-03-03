@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoryRequest;
 
 class StoriesController extends Controller
 {
@@ -34,7 +35,6 @@ class StoriesController extends Controller
         return view('stories.create', [
             'story' => $story
         ]);
-        
     }
 
     /**
@@ -43,18 +43,18 @@ class StoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoryRequest $request)
     {
         // dd($request->all());
 
-        $data = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-        ]);
+        // $data = $request->validate([
+        //     'title' => 'required',
+        //     'body' => 'required',
+        //     'type' => 'required',
+        //     'status' => 'required',
+        // ]);
 
-        auth()->user()->stories()->create($data);
+        auth()->user()->stories()->create($request->all());
 
         // dd('here');
         return redirect()->route('stories.index')->with('status', 'Story created successfully!');
@@ -91,16 +91,16 @@ class StoriesController extends Controller
      * @param  \App\Models\Story  $story
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Story $story)
+    public function update(StoryRequest $request, Story $story)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-        ]);
+        // $data = $request->validate([
+        //     'title' => 'required',
+        //     'body' => 'required',
+        //     'type' => 'required',
+        //     'status' => 'required',
+        // ]);
 
-        $story->update($data);
+        $story->update($request->data());
         return redirect()->route('stories.index')->with('status', 'Story Updated successfully!');
     }
 
