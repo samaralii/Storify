@@ -34,6 +34,7 @@ class StoriesController extends Controller
         return view('stories.create', [
             'story' => $story
         ]);
+        
     }
 
     /**
