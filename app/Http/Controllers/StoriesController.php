@@ -77,7 +77,7 @@ class StoriesController extends Controller
      */
     public function edit(Story $story)
     {
-        //
+        return view('stories.edit', ['story' => $story]);
     }
 
     /**
@@ -89,7 +89,15 @@ class StoriesController extends Controller
      */
     public function update(Request $request, Story $story)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+
+        $story->update($data);
+        return redirect()->route('stories.index')->with('status', 'Story Updated successfully!');
     }
 
     /**

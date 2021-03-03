@@ -33,6 +33,7 @@
                                     {{-- <a href="/stories/{{ $story->id }}" class="btn btn-secondary">View</a>  --}}
                                     {{-- <a href="{{ route('stories.show', [$story->id]) }}" class="btn btn-secondary">View</a> --}}
                                     <a href="{{ route('stories.show', [$story]) }}" class="btn btn-secondary">View</a>
+                                    <a href="{{ route('stories.edit', [$story]) }}" class="btn btn-secondary">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
