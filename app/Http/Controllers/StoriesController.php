@@ -43,21 +43,28 @@ class StoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(StoryRequest $request)
+    // {
+    //     // dd($request->all());
+
+    //     // $data = $request->validate([
+    //     //     'title' => 'required',
+    //     //     'body' => 'required',
+    //     //     'type' => 'required',
+    //     //     'status' => 'required',
+    //     // ]);
+
+    //     auth()->user()->stories()->create($request->all());
+
+    //     // dd('here');
+    //     return redirect()->route('stories.index')->with('status', 'Story created successfully!');
+    // }
     public function store(StoryRequest $request)
     {
-        // dd($request->all());
-
-        // $data = $request->validate([
-        //     'title' => 'required',
-        //     'body' => 'required',
-        //     'type' => 'required',
-        //     'status' => 'required',
-        // ]);
-
+        //
         auth()->user()->stories()->create($request->all());
 
-        // dd('here');
-        return redirect()->route('stories.index')->with('status', 'Story created successfully!');
+        return redirect()->route('stories.index')->with('status', 'Story Created Successfully!');
     }
 
     /**
@@ -91,17 +98,24 @@ class StoriesController extends Controller
      * @param  \App\Models\Story  $story
      * @return \Illuminate\Http\Response
      */
+    // public function update(StoryRequest $request, Story $story)
+    // {
+    //     // $data = $request->validate([
+    //     //     'title' => 'required',
+    //     //     'body' => 'required',
+    //     //     'type' => 'required',
+    //     //     'status' => 'required',
+    //     // ]);
+
+    //     $story->update($request->data());
+    //     return redirect()->route('stories.index')->with('status', 'Story Updated successfully!');
+    // }
     public function update(StoryRequest $request, Story $story)
     {
-        // $data = $request->validate([
-        //     'title' => 'required',
-        //     'body' => 'required',
-        //     'type' => 'required',
-        //     'status' => 'required',
-        // ]);
+        //
+        $story->update($request->all());
 
-        $story->update($request->data());
-        return redirect()->route('stories.index')->with('status', 'Story Updated successfully!');
+        return redirect()->route('stories.index')->with('status', 'Story Updated Successfully!');
     }
 
     /**
