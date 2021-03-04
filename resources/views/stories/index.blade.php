@@ -7,7 +7,10 @@
                 <div class="card">
                     <div class="card-header">
                         Stories
-                        <a href=" {{ route('stories.create') }} " class="float-right">Add Story</a>
+                        @can('create', App\Story::class)
+                            <a href=" {{ route('stories.create') }} " class="float-right">Add Story</a>
+                        @endcan
+
                     </div>
 
                     <div class="card-body">
@@ -39,10 +42,13 @@
                                             <a href="{{ route('stories.edit', [$story]) }}"
                                                 class="btn btn-secondary">Edit</a>
 
-                                            <form action="{{ route('stories.destroy', [$story]) }}" method="POST" style="display:inline-block">
+                                            <form action="{{ route('stories.destroy', [$story]) }}" method="POST"
+                                                style="display:inline-block">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                @can('delete', $story)
+                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                @endcan
                                             </form>
                                         </td>
                                     </tr>

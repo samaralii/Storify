@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
 
 Route::middleware(['auth'])->group(function () {
     // Route::get('/stories', [App\Http\Controllers\StoriesController::class, 'index'])->name('stories.index');

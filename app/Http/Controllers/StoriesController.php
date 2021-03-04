@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoryRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoriesController extends Controller
 {
@@ -32,6 +33,7 @@ class StoriesController extends Controller
     public function create()
     {
         $story = new Story;
+        // $this->authorize('create');
         return view('stories.create', [
             'story' => $story
         ]);
@@ -88,6 +90,8 @@ class StoriesController extends Controller
      */
     public function edit(Story $story)
     {
+        // Gate::authorize('edit-story', $story);
+        $this->authorize('update', $story);
         return view('stories.edit', ['story' => $story]);
     }
 
@@ -127,6 +131,7 @@ class StoriesController extends Controller
     public function destroy(Story $story)
     {
         $story->delete();
+        $this->authorize('delete');
         return redirect()->route('stories.index')->with('status', 'Story Deleted!');
 
     }
