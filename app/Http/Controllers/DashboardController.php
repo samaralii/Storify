@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Story;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyAdmin;
+use App\Mail\NewStoryNotification;
 
 class DashboardController extends Controller
 {
@@ -34,7 +37,7 @@ class DashboardController extends Controller
         ]);
     }
 
-     /**
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Story  $story
@@ -47,4 +50,24 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function email()
+    {
+
+        // Mail::send(new NotifyAdmin('Title of the story'));
+        Mail::send(new NewStoryNotification('Title of the story'));
+
+        // Mail::raw('This is the test email', function ($message) {
+        //     $message->to('admin@localhost.com', 'John Doe');
+        //     $message->subject('Subject');
+        //     // $message->from('john@johndoe.com', 'John Doe');
+        //     // $message->sender('john@johndoe.com', 'John Doe');
+        //     // $message->cc('john@johndoe.com', 'John Doe');
+        //     // $message->bcc('john@johndoe.com', 'John Doe');
+        //     // $message->replyTo('john@johndoe.com', 'John Doe');
+        //     // $message->priority(3);
+        //     // $message->attach('pathToFile');
+        // });
+
+        dd('here');
+    }
 }
