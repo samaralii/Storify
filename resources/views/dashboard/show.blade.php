@@ -13,6 +13,7 @@
 
                     <div class="card-body">
                         {{ $story->body }}
+                        <p class="font-italic">{{ $story->footnote }}</p>
 
                         {{-- <p class="font-weight-bold">
                             Status: {{ $story->status == 1 ? 'Yes' : 'No' }}
