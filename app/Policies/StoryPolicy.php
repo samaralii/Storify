@@ -71,8 +71,8 @@ class StoryPolicy
     public function delete(User $user, Story $story)
     {
         //
-        return false;
-        // return $user->id === $story->user_id;
+        // return false;
+        return $user->id === $story->user_id;
     }
 
     /**
