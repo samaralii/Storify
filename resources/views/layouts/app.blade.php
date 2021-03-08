@@ -57,14 +57,20 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ route('admin.stories.index') }}" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('stories.index') }}">Stories</a>
+
+                                    @if (Auth::user()->type == 1)
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
