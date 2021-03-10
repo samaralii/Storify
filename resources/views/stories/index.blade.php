@@ -17,6 +17,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Image</th>
                                     <th>Title</th>
                                     <th>Type</th>
                                     <th>Status</th>
@@ -25,7 +26,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($stories as $story)
+
                                     <tr>
+                                        <td>
+                                            <img src="{{ $story->thumbnail }}" alt="image" />
+                                        </td>
                                         <td>
                                             {{ $story->title }}
                                         </td>

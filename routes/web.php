@@ -47,3 +47,11 @@ Route::namespace('Admin')->prefix('admin')->middleware(['auth', CheckAdmin::clas
     Route::put('/stories/restore/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'restore'])->name('admin.stories.restore');
     Route::delete('/stories/delete/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'delete'])->name('admin.stories.delete');
 });
+
+Route::get('/image', function () {
+    $imagePath = public_path('storage/image.jpg');
+    $writePath = public_path('storage/thumbnail.jpg');
+    $img = Image::make($imagePath)->resize(225, 100);
+    $img->save($writePath);
+    return $img->response('jpg');
+});
