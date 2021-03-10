@@ -16,6 +16,7 @@
                                     <th>Title</th>
                                     <th>Type</th>
                                     <th>User</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,22 +31,21 @@
                                         <td>
                                             {{ $story->user->name }}
                                         </td>
-                                        {{-- <td>
-                                            <a href="{{ route('stories.show', [$story]) }}"
-                                                class="btn btn-secondary">View</a>
+                                        <td>
 
-                                            <a href="{{ route('stories.edit', [$story]) }}"
-                                                class="btn btn-secondary">Edit</a>
-
-                                            <form action="{{ route('stories.destroy', [$story]) }}" method="POST"
+                                            <form action=" {{ route('admin.stories.restore', [$story]) }}" method="POST"
+                                                style="display:inline-block">
+                                                @method('PUT')
+                                                @csrf
+                                                <button class="btn btn-sm btn-danger">Restore</button>
+                                            </form>
+                                            <form action=" {{ route('admin.stories.delete', [$story]) }}" method="POST"
                                                 style="display:inline-block">
                                                 @method('DELETE')
                                                 @csrf
-                                                @can('delete', $story)
-                                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                                @endcan
+                                                <button class="btn btn-sm btn-danger">Delete</button>
                                             </form>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

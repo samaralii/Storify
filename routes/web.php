@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StoriesController;
+use App\Http\Middleware\CheckAdmin;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,8 @@ Route::get('/email', [\App\Http\Controllers\DashboardController::class, 'email']
 //     Route::get('/deleted_stories', [App\Http\Controllers\StoriesController::class, 'index']);
 // });
 
-Route::namespace('Admin')->prefix('admin')->group(function () {
+Route::namespace('Admin')->prefix('admin')->middleware(['auth', CheckAdmin::class])->group(function () {
     Route::get('/deleted_stories', [App\Http\Controllers\Admin\StoriesController::class, 'index'])->name('admin.stories.index');
+    Route::put('/stories/restore/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'restore'])->name('admin.stories.restore');
+    Route::delete('/stories/delete/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'delete'])->name('admin.stories.delete');
 });
