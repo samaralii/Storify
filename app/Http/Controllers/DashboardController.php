@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Story;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NotifyAdmin;
 use App\Mail\NewStoryNotification;
 
 class DashboardController extends Controller
@@ -19,19 +16,19 @@ class DashboardController extends Controller
     public function index()
     {
 
+        //
         // DB::enableQueryLog();
-
         $query = Story::where('status', 1);
-        $type = request()->input('type');
 
+        $type = request()->input('type');
         if (in_array($type, ['short', 'long'])) {
             $query->where('type', $type);
         }
 
-        $stories = $query->with('user')
-            ->orderby('id', 'DESC')
+
+        $stories = $query->with(['user', 'tags'])
+            ->orderBy('id', 'DESC')
             ->paginate(9);
-        // dd($stories);
         return view('dashboard.index', [
             'stories' => $stories
         ]);

@@ -19,6 +19,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Title</th>
+                                    <th>Tags</th>
                                     <th>Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -33,6 +34,11 @@
                                         </td>
                                         <td>
                                             {{ $story->title }}
+                                        </td>
+                                        <td>
+                                            @foreach ($story->tags as $tag)
+                                                {{ $tag->name }}
+                                            @endforeach
                                         </td>
                                         <td>
                                             {{ $story->type }}

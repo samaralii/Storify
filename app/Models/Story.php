@@ -30,11 +30,16 @@ class Story extends Model
         return $this->belongsTo(\App\Models\User::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(\App\Models\Tag::class);
+    }
+
     protected static function booted()
     {
-        static::addGlobalScope('active', function (Builder $builder) {
-            $builder->where('status', 1);
-        });
+        // static::addGlobalScope('active', function (Builder $builder) {
+        //     $builder->where('status', 1);
+        // });
     }
 
     //accessor functions
@@ -54,8 +59,9 @@ class Story extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function getThumbnailAttribute() {
-        if($this->image) {
+    public function getThumbnailAttribute()
+    {
+        if ($this->image) {
             return asset('storage/' . $this->image);
         }
 

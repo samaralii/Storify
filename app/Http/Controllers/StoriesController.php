@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\StoryCreated;
 use App\Events\StoryEdited;
 use App\Models\Story;
+use App\Models\Tag;
 use App\Http\Requests\StoryRequest;
-use App\Mail\NewStoryNotification;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 
 
@@ -27,9 +25,9 @@ class StoriesController extends Controller
     public function index()
     {
         $stories = Story::where('user_id', auth()->user()->id)
-            ->orderby('id', 'DESC')
+            ->with('tags')
+            ->orderBy('id', 'DESC')
             ->paginate(3);
-        // dd($stories);
         return view('stories.index', [
             'stories' => $stories
         ]);
@@ -43,9 +41,10 @@ class StoriesController extends Controller
     public function create()
     {
         $story = new Story;
-        // $this->authorize('create');
+        $tags = Tag::get();
         return view('stories.create', [
-            'story' => $story
+            'story' => $story,
+            'tags' => $tags,
         ]);
     }
 
@@ -78,9 +77,14 @@ class StoriesController extends Controller
 
         // Mail::send(new NewStoryNotification($story->title));
         // Log::info('A Story with title' . $story->title . ' was added.');
-        if ($request->has('image')) {
+        $story = auth()->user()->stories()->create($request->all());
+
+        // Mail::send( new NewStoryNotification( $story->title ));
+        // Log::info(' A story with title ' . $story->title . ' was added');
+        if ($request->hasFile('image')) {
             $this->_uploadImage($request, $story);
         }
+        $story->tags()->sync($request->tags);
 
         event(new StoryCreated($story->title));
 
@@ -110,7 +114,11 @@ class StoriesController extends Controller
     {
         // Gate::authorize('edit-story', $story);
         // $this->authorize('update', $story);
-        return view('stories.edit', ['story' => $story]);
+        $tags = Tag::get();
+        return view('stories.edit', [
+            'story' => $story,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -135,11 +143,15 @@ class StoriesController extends Controller
     public function update(StoryRequest $request, Story $story)
     {
         //
-        $story->update($request->all());
-        if ($request->has('image')) {
+        $story->update( $request->all() );
+
+        if( $request->hasFile('image') ) {
             $this->_uploadImage($request, $story);
         }
-        event(new StoryEdited($story->title));
+        $story->tags()->sync( $request->tags);
+
+        event( new StoryEdited($story->title));
+
         return redirect()->route('stories.index')->with('status', 'Story Updated Successfully!');
     }
 
