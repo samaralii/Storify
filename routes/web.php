@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\StoriesController;
 use App\Http\Middleware\CheckAdmin;
-use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/stories/{story}', [App\Http\Controllers\StoriesController::class, 'show'])->name('stories.show');
     // Route::resource('stories', StoriesController::class);
     Route::resource('stories', StoriesController::class);
+    Route::get('/edit-profile', [\App\Http\Controllers\ProfilesController::class, 'edit'])->name('profiles.edit');
+    Route::put('/edit-profile/{user}', [\App\Http\Controllers\ProfilesController::class, 'update'])->name('profiles.update');
 });
 
 Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
