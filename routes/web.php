@@ -43,10 +43,11 @@ Route::get('/email', [\App\Http\Controllers\DashboardController::class, 'email']
 //     Route::get('/deleted_stories', [App\Http\Controllers\StoriesController::class, 'index']);
 // });
 
-Route::namespace('Admin')->prefix('admin')->middleware(['auth', CheckAdmin::class])->group(function () {
-    Route::get('/deleted_stories', [App\Http\Controllers\Admin\StoriesController::class, 'index'])->name('admin.stories.index');
-    Route::put('/stories/restore/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'restore'])->name('admin.stories.restore');
-    Route::delete('/stories/delete/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'delete'])->name('admin.stories.delete');
+Route::namespace('Admin')->name('admin.stories.')->prefix('admin')->middleware(['auth', CheckAdmin::class])->group(function () {
+    Route::get('/deleted_stories', [App\Http\Controllers\Admin\StoriesController::class, 'index'])->name('index');
+    Route::put('/stories/restore/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'restore'])->name('restore');
+    Route::delete('/stories/delete/{id}', [App\Http\Controllers\Admin\StoriesController::class, 'delete'])->name('delete');
+    Route::get('/stories/stats', [App\Http\Controllers\Admin\StoriesController::class, 'stats'])->name('stats');
 });
 
 Route::get('/image', function () {
